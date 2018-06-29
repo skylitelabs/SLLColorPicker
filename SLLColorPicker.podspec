@@ -1,15 +1,15 @@
 Pod::Spec.new do |s|
-  s.name         = 'SLLCircularSlider'
-  s.version      = '1.0.0'
+  s.name         = 'SLLColorPicker'
+  s.version      = '0.0.1'
   s.license      =  { :type => 'MIT', :file => 'LICENSE' }
   s.authors      =  { 'Leejay Schmidt' => 'leejay.schmidt@skylite.io' }
-  s.summary      = 'An extensible circular slider for iOS applications'
-  s.homepage     = 'https://github.com/skylitelabs/SLLCircularSlider'
+  s.summary      = 'A simple, circular color picker for iOS written in Objective C'
+  s.homepage     = 'https://github.com/skylitelabs/SLLColorPicker'
 
 # Source Info
   s.platform     =  :ios, '8.0'
-  s.source       =  { :git => 'https://github.com/skylitelabs/SLLCircularSlider.git', :tag => "1.0.0" }
-  s.source_files = 'SLLCircularSlider/SLLCircularSlider.{h,m}'
+  s.source       =  { :git => 'https://github.com/skylitelabs/SLLColorPicker.git', :tag => "0.0.1" }
+  s.source_files = 'SLLColorPicker/SLLColorPicker.{h,m}'
 
   s.requires_arc = true
 end
