@@ -1,6 +1,9 @@
 SLLColorPicker
 ===============
 
+(c) 2018 Skylite Labs Inc.
+Based on ISColorWheel, (c) 2015 Justin Meiners.
+
 ### About ###
 
 A fully scalable and dynamically rendered color picker for iOS.
@@ -15,6 +18,5 @@ Color wheels visualize and define colors from hue, saturation, and brightness co
 ### Includes ###
   - Standalone SLLColorPicker class (UIView subclass)
   - Example project
-
 
 ![sample image](screenshots/main.png)
