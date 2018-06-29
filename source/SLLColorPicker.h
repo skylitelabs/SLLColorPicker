@@ -38,12 +38,12 @@ static inline SLLColorPickerPixelRGB SLLColorPickerPixelRGBMake(unsigned char re
 
 @property (nonatomic, readwrite, nullable, weak) id<SLLColorPickerDelegate> delegate;
 @property (nonatomic, readwrite, assign) CGSize dropperSize;
-@property (nonatomic, readwrite, nonnull, strong) UIView* dropperView;
+@property (nonatomic, readwrite, nullable, strong) UIView* dropperView;
 @property (nonatomic, readwrite, assign) CGFloat brightness;
 @property (nonatomic, readwrite, assign) BOOL continuous;
-@property (nonatomic, readwrite, null_unspecified, strong) UIColor* borderColor;
+@property (nonatomic, readwrite, nullable, strong) UIColor* borderColor;
 @property (nonatomic, readwrite, assign) CGFloat borderWidth;
-@property (nonatomic, readwrite, null_unspecified, strong) UIColor* currentColor;
+@property (nonatomic, readwrite, nullable, strong) UIColor* currentColor;
 
 - (void)updateImage;
 - (void)setTouchPoint:(CGPoint)point;

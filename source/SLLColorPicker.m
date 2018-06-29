@@ -13,9 +13,9 @@ static inline CGFloat SLLColorPicker_PointDistance(CGPoint p1,
     return sqrtf((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
 }
 
-static SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
-                                                     CGFloat saturation,
-                                                     CGFloat brightness) {
+static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
+                                                            CGFloat saturation,
+                                                            CGFloat brightness) {
     hue *= 6.0f;
     
     NSInteger i = (NSInteger)floorf(hue);
@@ -28,8 +28,7 @@ static SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     CGFloat green;
     CGFloat blue;
     
-    switch (i)
-    {
+    switch (i) {
         case 0:
             red = brightness;
             green = t;
@@ -75,25 +74,21 @@ static SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
 
 @implementation SLLDropperView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    if ((self = [super initWithFrame:frame]))
-    {
+- (id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
         self.fillColor = [UIColor clearColor];
-        
     }
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
     CGFloat borderWidth = 2.0f;
     CGRect borderFrame = CGRectInset(self.bounds, borderWidth / 2.0, borderWidth / 2.0);
     
-    CGContextSetFillColorWithColor(ctx, _fillColor.CGColor);
+    CGContextSetFillColorWithColor(ctx, [self.fillColor CGColor]);
     CGContextAddEllipseInRect(ctx, borderFrame);
     CGContextFillPath(ctx);
 
@@ -106,25 +101,19 @@ static SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
 
 @end
 
-
 @interface SLLColorPicker ()
-{
-    CGImageRef _radialImage;
-    SLLColorPickerPixelRGB* _imageData;
-    int _imageDataLength;
-    CGFloat _radius;
-    CGPoint _touchPoint;
-}
+
+@property (nonatomic, readwrite, assign) CGImageRef radialImage;
+@property (nonatomic, readwrite, assign) SLLColorPickerPixelRGB *imageData;
+@property (nonatomic, readwrite, assign) NSInteger imageDataLength;
+@property (nonatomic, readwrite, assign) CGFloat radius;
+@property (nonatomic, readwrite, assign) CGPoint touchPoint;
 
 - (SLLColorPickerPixelRGB)colorAtPoint:(CGPoint)point;
-
 - (CGPoint)viewToImageSpace:(CGPoint)point;
 - (void)updateDropper;
 
-
 @end
-
-
 
 @implementation SLLColorPicker
 
