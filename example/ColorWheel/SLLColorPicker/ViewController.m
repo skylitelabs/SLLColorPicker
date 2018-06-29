@@ -1,19 +1,19 @@
 /*
- By: Justin Meiners
+ Modified Version By: Leejay Schmidt (Skylite Labs Inc.)
  
- Copyright (c) 2015 Justin Meiners
+ Copyright (c) 2018 Skylite Labs Inc.
+ Based on the original: ISColorWheel from Justin Meiners : https://github.com/justinmeiners/ios-color-wheel
  Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  */
 
 #import "ViewController.h"
-#import "ISColorWheel.h"
+#import "SLLColorPicker.h"
 
-@interface ViewController () <ISColorWheelDelegate>
-{
-    ISColorWheel* _colorWheel;
-    UISlider* _brightnessSlider;
-    UIView* _wellView;
-}
+@interface ViewController () <SLLColorPickerDelegate>
+
+@property (nonatomic, readwrite, nonnull, strong) SLLColorPicker *colorPicker;
+@property (nonatomic, readwrite, nonnull, strong) UISlider *brightnessSlider;
+@property (nonatomic, readwrite, nonnull, strong) UIView *wellView;
 
 @end
 
@@ -26,15 +26,15 @@
     
     CGSize size = self.view.bounds.size;
     
-    CGSize wheelSize = CGSizeMake(size.width * .9, size.width * .9);
+    CGSize pickerSize = CGSizeMake(size.width * .9, size.width * .9);
     
-    _colorWheel = [[ISColorWheel alloc] initWithFrame:CGRectMake(size.width / 2 - wheelSize.width / 2,
-                                                                 size.height * .1,
-                                                                 wheelSize.width,
-                                                                 wheelSize.height)];
-    _colorWheel.delegate = self;
-    _colorWheel.continuous = true;
-    [self.view addSubview:_colorWheel];
+    self.colorPicker = [[SLLColorPicker alloc] initWithFrame:CGRectMake(size.width / 2 - pickerSize.width / 2,
+                                                                        size.height * .1,
+                                                                        pickerSize.width,
+                                                                        pickerSize.height)];
+    _colorPicker.delegate = self;
+    _colorPicker.continuous = true;
+    [self.view addSubview:_colorPicker];
     
     _brightnessSlider = [[UISlider alloc] initWithFrame:CGRectMake(size.width * .4,
                                                                    size.height * .8,
@@ -61,13 +61,13 @@
 
 - (void)changeBrightness:(UISlider*)sender
 {
-    [_colorWheel setBrightness:_brightnessSlider.value];
-    [_wellView setBackgroundColor:_colorWheel.currentColor];
+    [_colorPicker setBrightness:_brightnessSlider.value];
+    [_wellView setBackgroundColor:_colorPicker.currentColor];
 }
 
-- (void)colorWheelDidChangeColor:(ISColorWheel *)colorWheel
+- (void)colorPickerDidChangeColor:(SLLColorPicker *)colorPicker
 {
-    [_wellView setBackgroundColor:_colorWheel.currentColor];
+    [_wellView setBackgroundColor:_colorPicker.currentColor];
 }
 
     // Do any additional setup after loading the view, typically from a nib.

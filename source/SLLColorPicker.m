@@ -1,18 +1,19 @@
 /*
- By: Justin Meiners
+ Modified Version By: Leejay Schmidt (Skylite Labs Inc.)
  
- Copyright (c) 2015 Justin Meiners
+ Copyright (c) 2018 Skylite Labs Inc.
+ Based on the original: ISColorWheel from Justin Meiners : https://github.com/justinmeiners/ios-color-wheel
  Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  */
 
-#import "ISColorWheel.h"
+#import "SLLColorPicker.h"
 
-static CGFloat ISColorWheel_PointDistance (CGPoint p1, CGPoint p2)
+static CGFloat SLLColorPicker_PointDistance (CGPoint p1, CGPoint p2)
 {
     return sqrtf((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
 }
 
-static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat v)
+static SLLColorPickerPixelRGB SLLColorPicker_HSBToRGB (CGFloat h, CGFloat s, CGFloat v)
 {
     h *= 6.0f;
     
@@ -60,7 +61,7 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
             break;
     }
     
-    ISColorWheelPixelRGB pixel;
+    SLLColorPickerPixelRGB pixel;
     pixel.r = r * 255.0f;
     pixel.g = g * 255.0f;
     pixel.b = b * 255.0f;
@@ -68,12 +69,12 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     return pixel;
 }
 
-@interface ISColorKnobView : UIView
+@interface SLLDropperView : UIView
 @property(nonatomic, strong)UIColor* fillColor;
 
 @end
 
-@implementation ISColorKnobView
+@implementation SLLDropperView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -107,26 +108,26 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
 @end
 
 
-@interface ISColorWheel ()
+@interface SLLColorPicker ()
 {
     CGImageRef _radialImage;
-    ISColorWheelPixelRGB* _imageData;
+    SLLColorPickerPixelRGB* _imageData;
     int _imageDataLength;
     CGFloat _radius;
     CGPoint _touchPoint;
 }
 
-- (ISColorWheelPixelRGB)colorAtPoint:(CGPoint)point;
+- (SLLColorPickerPixelRGB)colorAtPoint:(CGPoint)point;
 
 - (CGPoint)viewToImageSpace:(CGPoint)point;
-- (void)updateKnob;
+- (void)updateDropper;
 
 
 @end
 
 
 
-@implementation ISColorWheel
+@implementation SLLColorPicker
 
 - (void)doInit
 {
@@ -136,7 +137,7 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     _imageDataLength = 0;
     
     _brightness = 1.0;
-    _knobSize = CGSizeMake(28, 28);
+    _dropperSize = CGSizeMake(28, 28);
     
     _touchPoint = CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0);
     
@@ -145,7 +146,7 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     self.borderWidth = 3.0;
     
     self.backgroundColor = [UIColor clearColor];
-    self.knobView = [[ISColorKnobView alloc] init];
+    self.dropperView = [[SLLDropperView alloc] init];
     
     _continuous = false;
 }
@@ -177,16 +178,16 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
         free(_imageData);
     }
     
-    self.knobView = nil;
+    self.dropperView = nil;
 }
 
 
-- (ISColorWheelPixelRGB)colorAtPoint:(CGPoint)point
+- (SLLColorPickerPixelRGB)colorAtPoint:(CGPoint)point
 {
     CGPoint center = CGPointMake(_radius, _radius);
     
     CGFloat angle = atan2(point.x - center.x, point.y - center.y) + M_PI;
-    CGFloat dist = ISColorWheel_PointDistance(point, CGPointMake(center.x, center.y));
+    CGFloat dist = SLLColorPicker_PointDistance(point, CGPointMake(center.x, center.y));
     
     CGFloat hue = angle / (M_PI * 2.0f);
     
@@ -198,7 +199,7 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     sat = MIN(sat, 1.0f);
     sat = MAX(sat, 0.0f);
     
-    return ISColorWheel_HSBToRGB(hue, sat, _brightness);
+    return SLLColorPicker_HSBToRGB(hue, sat, _brightness);
 }
 
 - (CGPoint)viewToImageSpace:(CGPoint)point
@@ -216,15 +217,15 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     return point;
 }
 
-- (void)updateKnob
+- (void)updateDropper
 {
-    if (!_knobView)
+    if (!_dropperView)
     {
         return;
     }
     
-    _knobView.bounds = CGRectMake(0, 0, _knobSize.width, _knobSize.height);
-    _knobView.center = _touchPoint;
+    _dropperView.bounds = CGRectMake(0, 0, _dropperSize.width, _dropperSize.height);
+    _dropperView.center = _touchPoint;
 }
 
 - (void)updateImage
@@ -243,7 +244,7 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     int width = _radius * 2.0;
     int height = width;
     
-    int dataLength = sizeof(ISColorWheelPixelRGB) * width * height;
+    int dataLength = sizeof(SLLColorPickerPixelRGB) * width * height;
     
     if (dataLength != _imageDataLength)
     {
@@ -288,7 +289,7 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
 
 - (UIColor*)currentColor
 {
-    ISColorWheelPixelRGB pixel = [self colorAtPoint:[self viewToImageSpace:_touchPoint]];
+    SLLColorPickerPixelRGB pixel = [self colorAtPoint:[self viewToImageSpace:_touchPoint]];
     return [UIColor colorWithRed:pixel.r / 255.0f green:pixel.g / 255.0f blue:pixel.b / 255.0f alpha:1.0];
 }
 
@@ -322,30 +323,30 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     
     [self updateImage];
     
-    if ([_knobView respondsToSelector:@selector(setFillColor:)])
+    if ([_dropperView respondsToSelector:@selector(setFillColor:)])
     {
-        [_knobView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
-        [_knobView setNeedsDisplay];
+        [_dropperView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
+        [_dropperView setNeedsDisplay];
     }
     
-    [_delegate colorWheelDidChangeColor:self];
+    [_delegate colorPickerDidChangeColor:self];
 }
 
-- (void)setKnobView:(UIView *)knobView
+- (void)setDropperView:(UIView *)dropperView
 {
-    if (_knobView)
+    if (_dropperView)
     {
-        [_knobView removeFromSuperview];
+        [_dropperView removeFromSuperview];
     }
     
-    _knobView = knobView;
+    _dropperView = dropperView;
     
-    if (_knobView)
+    if (_dropperView)
     {
-        [self addSubview:_knobView];
+        [self addSubview:_dropperView];
     }
     
-    [self updateKnob];
+    [self updateDropper];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -395,15 +396,15 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     
     [self setTouchPoint:[[touches anyObject] locationInView:self]];
     
-    if ([_knobView respondsToSelector:@selector(setFillColor:)])
+    if ([_dropperView respondsToSelector:@selector(setFillColor:)])
     {
-        [_knobView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
-        [_knobView setNeedsDisplay];
+        [_dropperView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
+        [_dropperView setNeedsDisplay];
     }
     
     [self didChangeValueForKey:@"currentColor"];
     
-    [_delegate colorWheelDidChangeColor:self];
+    [_delegate colorPickerDidChangeColor:self];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -412,23 +413,23 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     
     [self setTouchPoint:[[touches anyObject] locationInView:self]];
     
-    if ([_knobView respondsToSelector:@selector(setFillColor:)])
+    if ([_dropperView respondsToSelector:@selector(setFillColor:)])
     {
-        [_knobView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
-        [_knobView setNeedsDisplay];
+        [_dropperView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
+        [_dropperView setNeedsDisplay];
     }
     
     [self didChangeValueForKey:@"currentColor"];
     
     if (_continuous)
     {
-        [_delegate colorWheelDidChangeColor:self];
+        [_delegate colorPickerDidChangeColor:self];
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [_delegate colorWheelDidChangeColor:self];
+    [_delegate colorPickerDidChangeColor:self];
 }
 
 
@@ -440,7 +441,7 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
     CGPoint center = CGPointMake(width / 2.0, height / 2.0);
     
     // Check if the touch is outside the wheel
-    if (ISColorWheel_PointDistance(center, point) < _radius)
+    if (SLLColorPicker_PointDistance(center, point) < _radius)
     {
         _touchPoint = point;
     }
@@ -457,7 +458,7 @@ static ISColorWheelPixelRGB ISColorWheel_HSBToRGB (CGFloat h, CGFloat s, CGFloat
         _touchPoint = CGPointMake(center.x + vec.x * _radius, center.y + vec.y * _radius);
     }
     
-    [self updateKnob];
+    [self updateDropper];
 }
 
 @end

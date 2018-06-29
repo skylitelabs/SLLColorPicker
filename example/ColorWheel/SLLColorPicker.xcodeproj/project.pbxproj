@@ -14,7 +14,7 @@
 		D0E2E52C1B8EC23F001D82FA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0E2E52B1B8EC23F001D82FA /* Images.xcassets */; };
 		D0E2E52F1B8EC23F001D82FA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0E2E52D1B8EC23F001D82FA /* LaunchScreen.xib */; };
 		D0E2E53B1B8EC23F001D82FA /* ColorWheelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E2E53A1B8EC23F001D82FA /* ColorWheelTests.m */; };
-		D0E2E5471B8EC258001D82FA /* ISColorWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E2E5461B8EC258001D82FA /* ISColorWheel.m */; };
+		D0E2E5471B8EC258001D82FA /* SLLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E2E5461B8EC258001D82FA /* SLLColorPicker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D0E2E51B1B8EC23F001D82FA /* ColorWheel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorWheel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0E2E51B1B8EC23F001D82FA /* SLLColorPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SLLColorPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E2E51F1B8EC23F001D82FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0E2E5201B8EC23F001D82FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D0E2E5221B8EC23F001D82FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -38,11 +38,11 @@
 		D0E2E5291B8EC23F001D82FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0E2E52B1B8EC23F001D82FA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D0E2E52E1B8EC23F001D82FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		D0E2E5341B8EC23F001D82FA /* ColorWheelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ColorWheelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0E2E5341B8EC23F001D82FA /* SLLColorPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SLLColorPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E2E5391B8EC23F001D82FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0E2E53A1B8EC23F001D82FA /* ColorWheelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorWheelTests.m; sourceTree = "<group>"; };
-		D0E2E5451B8EC258001D82FA /* ISColorWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISColorWheel.h; sourceTree = "<group>"; };
-		D0E2E5461B8EC258001D82FA /* ISColorWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISColorWheel.m; sourceTree = "<group>"; };
+		D0E2E5451B8EC258001D82FA /* SLLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLColorPicker.h; sourceTree = "<group>"; };
+		D0E2E5461B8EC258001D82FA /* SLLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLLColorPicker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +66,8 @@
 		D0E2E5121B8EC23F001D82FA = {
 			isa = PBXGroup;
 			children = (
-				D0E2E51D1B8EC23F001D82FA /* ColorWheel */,
-				D0E2E5371B8EC23F001D82FA /* ColorWheelTests */,
+				D0E2E51D1B8EC23F001D82FA /* SLLColorPicker */,
+				D0E2E5371B8EC23F001D82FA /* SLLColorPickerTests */,
 				D0E2E51C1B8EC23F001D82FA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -75,16 +75,16 @@
 		D0E2E51C1B8EC23F001D82FA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D0E2E51B1B8EC23F001D82FA /* ColorWheel.app */,
-				D0E2E5341B8EC23F001D82FA /* ColorWheelTests.xctest */,
+				D0E2E51B1B8EC23F001D82FA /* SLLColorPicker.app */,
+				D0E2E5341B8EC23F001D82FA /* SLLColorPickerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D0E2E51D1B8EC23F001D82FA /* ColorWheel */ = {
+		D0E2E51D1B8EC23F001D82FA /* SLLColorPicker */ = {
 			isa = PBXGroup;
 			children = (
-				D0E2E5441B8EC258001D82FA /* ColorWheel */,
+				D0E2E5441B8EC258001D82FA /* SLLColorPicker */,
 				D0E2E5221B8EC23F001D82FA /* AppDelegate.h */,
 				D0E2E5231B8EC23F001D82FA /* AppDelegate.m */,
 				D0E2E5251B8EC23F001D82FA /* ViewController.h */,
@@ -94,7 +94,7 @@
 				D0E2E52D1B8EC23F001D82FA /* LaunchScreen.xib */,
 				D0E2E51E1B8EC23F001D82FA /* Supporting Files */,
 			);
-			path = ColorWheel;
+			path = SLLColorPicker;
 			sourceTree = "<group>";
 		};
 		D0E2E51E1B8EC23F001D82FA /* Supporting Files */ = {
@@ -106,13 +106,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D0E2E5371B8EC23F001D82FA /* ColorWheelTests */ = {
+		D0E2E5371B8EC23F001D82FA /* SLLColorPickerTests */ = {
 			isa = PBXGroup;
 			children = (
 				D0E2E53A1B8EC23F001D82FA /* ColorWheelTests.m */,
 				D0E2E5381B8EC23F001D82FA /* Supporting Files */,
 			);
-			path = ColorWheelTests;
+			path = SLLColorPickerTests;
 			sourceTree = "<group>";
 		};
 		D0E2E5381B8EC23F001D82FA /* Supporting Files */ = {
@@ -123,22 +123,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D0E2E5441B8EC258001D82FA /* ColorWheel */ = {
+		D0E2E5441B8EC258001D82FA /* SLLColorPicker */ = {
 			isa = PBXGroup;
 			children = (
-				D0E2E5451B8EC258001D82FA /* ISColorWheel.h */,
-				D0E2E5461B8EC258001D82FA /* ISColorWheel.m */,
+				D0E2E5451B8EC258001D82FA /* SLLColorPicker.h */,
+				D0E2E5461B8EC258001D82FA /* SLLColorPicker.m */,
 			);
-			name = ColorWheel;
+			name = SLLColorPicker;
 			path = ../../../source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D0E2E51A1B8EC23F001D82FA /* ColorWheel */ = {
+		D0E2E51A1B8EC23F001D82FA /* SLLColorPicker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D0E2E53E1B8EC23F001D82FA /* Build configuration list for PBXNativeTarget "ColorWheel" */;
+			buildConfigurationList = D0E2E53E1B8EC23F001D82FA /* Build configuration list for PBXNativeTarget "SLLColorPicker" */;
 			buildPhases = (
 				D0E2E5171B8EC23F001D82FA /* Sources */,
 				D0E2E5181B8EC23F001D82FA /* Frameworks */,
@@ -148,14 +148,14 @@
 			);
 			dependencies = (
 			);
-			name = ColorWheel;
+			name = SLLColorPicker;
 			productName = ColorWheel;
-			productReference = D0E2E51B1B8EC23F001D82FA /* ColorWheel.app */;
+			productReference = D0E2E51B1B8EC23F001D82FA /* SLLColorPicker.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D0E2E5331B8EC23F001D82FA /* ColorWheelTests */ = {
+		D0E2E5331B8EC23F001D82FA /* SLLColorPickerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D0E2E5411B8EC23F001D82FA /* Build configuration list for PBXNativeTarget "ColorWheelTests" */;
+			buildConfigurationList = D0E2E5411B8EC23F001D82FA /* Build configuration list for PBXNativeTarget "SLLColorPickerTests" */;
 			buildPhases = (
 				D0E2E5301B8EC23F001D82FA /* Sources */,
 				D0E2E5311B8EC23F001D82FA /* Frameworks */,
@@ -166,9 +166,9 @@
 			dependencies = (
 				D0E2E5361B8EC23F001D82FA /* PBXTargetDependency */,
 			);
-			name = ColorWheelTests;
+			name = SLLColorPickerTests;
 			productName = ColorWheelTests;
-			productReference = D0E2E5341B8EC23F001D82FA /* ColorWheelTests.xctest */;
+			productReference = D0E2E5341B8EC23F001D82FA /* SLLColorPickerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -182,6 +182,7 @@
 				TargetAttributes = {
 					D0E2E51A1B8EC23F001D82FA = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 47P6F3UU7E;
 					};
 					D0E2E5331B8EC23F001D82FA = {
 						CreatedOnToolsVersion = 6.4;
@@ -189,7 +190,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D0E2E5161B8EC23F001D82FA /* Build configuration list for PBXProject "ColorWheel" */;
+			buildConfigurationList = D0E2E5161B8EC23F001D82FA /* Build configuration list for PBXProject "SLLColorPicker" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -202,8 +203,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D0E2E51A1B8EC23F001D82FA /* ColorWheel */,
-				D0E2E5331B8EC23F001D82FA /* ColorWheelTests */,
+				D0E2E51A1B8EC23F001D82FA /* SLLColorPicker */,
+				D0E2E5331B8EC23F001D82FA /* SLLColorPickerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -234,7 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0E2E5271B8EC23F001D82FA /* ViewController.m in Sources */,
-				D0E2E5471B8EC258001D82FA /* ISColorWheel.m in Sources */,
+				D0E2E5471B8EC258001D82FA /* SLLColorPicker.m in Sources */,
 				D0E2E5241B8EC23F001D82FA /* AppDelegate.m in Sources */,
 				D0E2E5211B8EC23F001D82FA /* main.m in Sources */,
 			);
@@ -253,7 +254,7 @@
 /* Begin PBXTargetDependency section */
 		D0E2E5361B8EC23F001D82FA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D0E2E51A1B8EC23F001D82FA /* ColorWheel */;
+			target = D0E2E51A1B8EC23F001D82FA /* SLLColorPicker */;
 			targetProxy = D0E2E5351B8EC23F001D82FA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -364,8 +365,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = ColorWheel/Info.plist;
+				DEVELOPMENT_TEAM = 47P6F3UU7E;
+				INFOPLIST_FILE = SLLColorPicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leejayschmidt.SLLColorPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -374,8 +377,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = ColorWheel/Info.plist;
+				DEVELOPMENT_TEAM = 47P6F3UU7E;
+				INFOPLIST_FILE = SLLColorPicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.leejayschmidt.SLLColorPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -392,10 +397,10 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ColorWheelTests/Info.plist;
+				INFOPLIST_FILE = SLLColorPickerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ColorWheel.app/ColorWheel";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SLLColorPicker.app/SLLColorPicker";
 			};
 			name = Debug;
 		};
@@ -407,17 +412,17 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ColorWheelTests/Info.plist;
+				INFOPLIST_FILE = SLLColorPickerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ColorWheel.app/ColorWheel";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SLLColorPicker.app/SLLColorPicker";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D0E2E5161B8EC23F001D82FA /* Build configuration list for PBXProject "ColorWheel" */ = {
+		D0E2E5161B8EC23F001D82FA /* Build configuration list for PBXProject "SLLColorPicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D0E2E53C1B8EC23F001D82FA /* Debug */,
@@ -426,21 +431,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D0E2E53E1B8EC23F001D82FA /* Build configuration list for PBXNativeTarget "ColorWheel" */ = {
+		D0E2E53E1B8EC23F001D82FA /* Build configuration list for PBXNativeTarget "SLLColorPicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D0E2E53F1B8EC23F001D82FA /* Debug */,
 				D0E2E5401B8EC23F001D82FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		D0E2E5411B8EC23F001D82FA /* Build configuration list for PBXNativeTarget "ColorWheelTests" */ = {
+		D0E2E5411B8EC23F001D82FA /* Build configuration list for PBXNativeTarget "SLLColorPickerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D0E2E5421B8EC23F001D82FA /* Debug */,
 				D0E2E5431B8EC23F001D82FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
