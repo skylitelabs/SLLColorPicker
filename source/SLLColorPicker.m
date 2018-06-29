@@ -8,69 +8,68 @@
 
 #import "SLLColorPicker.h"
 
-static CGFloat SLLColorPicker_PointDistance (CGPoint p1, CGPoint p2)
-{
+static inline CGFloat SLLColorPicker_PointDistance(CGPoint p1,
+                                                   CGPoint p2) {
     return sqrtf((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
 }
 
-static SLLColorPickerPixelRGB SLLColorPicker_HSBToRGB (CGFloat h, CGFloat s, CGFloat v)
-{
-    h *= 6.0f;
+static SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
+                                                     CGFloat saturation,
+                                                     CGFloat brightness) {
+    hue *= 6.0f;
     
-    NSInteger i = (NSInteger)floorf(h);
-    CGFloat f = h - (CGFloat)i;
-    CGFloat p = v *  (1.0f - s);
-    CGFloat q = v * (1.0f - s * f);
-    CGFloat t = v * (1.0f - s * (1.0f - f));
+    NSInteger i = (NSInteger)floorf(hue);
+    CGFloat f = hue - (CGFloat)i;
+    CGFloat p = brightness * (1.0f - saturation);
+    CGFloat q = brightness * (1.0f - saturation * f);
+    CGFloat t = brightness * (1.0f - saturation * (1.0f - f));
     
-    CGFloat r;
-    CGFloat g;
-    CGFloat b;
+    CGFloat red;
+    CGFloat green;
+    CGFloat blue;
     
     switch (i)
     {
         case 0:
-            r = v;
-            g = t;
-            b = p;
+            red = brightness;
+            green = t;
+            blue = p;
             break;
         case 1:
-            r = q;
-            g = v;
-            b = p;
+            red = q;
+            green = brightness;
+            blue = p;
             break;
         case 2:
-            r = p;
-            g = v;
-            b = t;
+            red = p;
+            green = brightness;
+            blue = t;
             break;
         case 3:
-            r = p;
-            g = q;
-            b = v;
+            red = p;
+            green = q;
+            blue = brightness;
             break;
         case 4:
-            r = t;
-            g = p;
-            b = v;
+            red = t;
+            green = p;
+            blue = brightness;
             break;
         default:        // case 5:
-            r = v;
-            g = p;
-            b = q;
+            red = brightness;
+            green = p;
+            blue = q;
             break;
     }
     
-    SLLColorPickerPixelRGB pixel;
-    pixel.r = r * 255.0f;
-    pixel.g = g * 255.0f;
-    pixel.b = b * 255.0f;
-    
-    return pixel;
+    return SLLColorPickerPixelRGBMake(red * 255.f,
+                                      green * 255.f,
+                                      blue * 255.f);
 }
 
 @interface SLLDropperView : UIView
-@property(nonatomic, strong)UIColor* fillColor;
+
+@property (nonatomic, readwrite, null_unspecified, strong) UIColor* fillColor;
 
 @end
 
@@ -199,7 +198,7 @@ static SLLColorPickerPixelRGB SLLColorPicker_HSBToRGB (CGFloat h, CGFloat s, CGF
     sat = MIN(sat, 1.0f);
     sat = MAX(sat, 0.0f);
     
-    return SLLColorPicker_HSBToRGB(hue, sat, _brightness);
+    return SLLColorPickerHSBToRGB(hue, sat, _brightness);
 }
 
 - (CGPoint)viewToImageSpace:(CGPoint)point
@@ -290,7 +289,10 @@ static SLLColorPickerPixelRGB SLLColorPicker_HSBToRGB (CGFloat h, CGFloat s, CGF
 - (UIColor*)currentColor
 {
     SLLColorPickerPixelRGB pixel = [self colorAtPoint:[self viewToImageSpace:_touchPoint]];
-    return [UIColor colorWithRed:pixel.r / 255.0f green:pixel.g / 255.0f blue:pixel.b / 255.0f alpha:1.0];
+    return [UIColor colorWithRed:pixel.red / 255.f
+                           green:pixel.green / 255.f
+                            blue:pixel.blue / 255.f
+                           alpha:1.0];
 }
 
 - (void)setCurrentColor:(UIColor*)color

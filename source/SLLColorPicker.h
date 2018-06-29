@@ -8,37 +8,44 @@
 
 #import <UIKit/UIKit.h>
 
-typedef struct
-{
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
+typedef struct {
+    unsigned char red;
+    unsigned char green;
+    unsigned char blue;
 } SLLColorPickerPixelRGB;
+
+static inline SLLColorPickerPixelRGB SLLColorPickerPixelRGBMake(unsigned char red,
+                                                         unsigned char green,
+                                                         unsigned char blue) {
+    SLLColorPickerPixelRGB pixel;
+    pixel.red = red;
+    pixel.green = green;
+    pixel.blue = blue;
+    return pixel;
+}
 
 @class SLLColorPicker;
 
 
 @protocol SLLColorPickerDelegate <NSObject>
-@required
+
 - (void)colorPickerDidChangeColor:(SLLColorPicker*)colorPicker;
+
 @end
 
 
 @interface SLLColorPicker : UIControl
 
-
-@property(nonatomic, weak) IBOutlet id <SLLColorPickerDelegate> delegate;
-@property(nonatomic, assign)CGSize dropperSize;
-@property(nonatomic, strong)UIView* dropperView;
-@property(nonatomic, assign)CGFloat brightness;
-@property(nonatomic, assign)BOOL continuous;
-@property(nonatomic, strong)UIColor* borderColor;
-@property(nonatomic, assign)CGFloat borderWidth;
-@property(nonatomic, strong)UIColor* currentColor;
+@property (nonatomic, readwrite, nullable, weak) id<SLLColorPickerDelegate> delegate;
+@property (nonatomic, readwrite, assign) CGSize dropperSize;
+@property (nonatomic, readwrite, nonnull, strong) UIView* dropperView;
+@property (nonatomic, readwrite, assign) CGFloat brightness;
+@property (nonatomic, readwrite, assign) BOOL continuous;
+@property (nonatomic, readwrite, null_unspecified, strong) UIColor* borderColor;
+@property (nonatomic, readwrite, assign) CGFloat borderWidth;
+@property (nonatomic, readwrite, null_unspecified, strong) UIColor* currentColor;
 
 - (void)updateImage;
 - (void)setTouchPoint:(CGPoint)point;
-
-
 
 @end
