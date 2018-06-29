@@ -6,10 +6,10 @@
  Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  */
 
-#import "ViewController.h"
+#import "SLLViewController.h"
 #import "SLLColorPicker.h"
 
-@interface ViewController () <SLLColorPickerDelegate>
+@interface SLLViewController () <SLLColorPickerDelegate>
 
 @property (nonatomic, readwrite, nonnull, strong) SLLColorPicker *colorPicker;
 @property (nonatomic, readwrite, nonnull, strong) UISlider *brightnessSlider;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation ViewController
+@implementation SLLViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

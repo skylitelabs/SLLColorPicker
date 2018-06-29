@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D0E2E5211B8EC23F001D82FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E2E5201B8EC23F001D82FA /* main.m */; };
-		D0E2E5241B8EC23F001D82FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E2E5231B8EC23F001D82FA /* AppDelegate.m */; };
-		D0E2E5271B8EC23F001D82FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E2E5261B8EC23F001D82FA /* ViewController.m */; };
+		D0E2E5241B8EC23F001D82FA /* SLLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E2E5231B8EC23F001D82FA /* SLLAppDelegate.m */; };
+		D0E2E5271B8EC23F001D82FA /* SLLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E2E5261B8EC23F001D82FA /* SLLViewController.m */; };
 		D0E2E52A1B8EC23F001D82FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E2E5281B8EC23F001D82FA /* Main.storyboard */; };
 		D0E2E52C1B8EC23F001D82FA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0E2E52B1B8EC23F001D82FA /* Images.xcassets */; };
 		D0E2E52F1B8EC23F001D82FA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0E2E52D1B8EC23F001D82FA /* LaunchScreen.xib */; };
@@ -31,10 +31,10 @@
 		D0E2E51B1B8EC23F001D82FA /* SLLColorPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SLLColorPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E2E51F1B8EC23F001D82FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0E2E5201B8EC23F001D82FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D0E2E5221B8EC23F001D82FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D0E2E5231B8EC23F001D82FA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D0E2E5251B8EC23F001D82FA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D0E2E5261B8EC23F001D82FA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D0E2E5221B8EC23F001D82FA /* SLLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SLLAppDelegate.h; sourceTree = "<group>"; };
+		D0E2E5231B8EC23F001D82FA /* SLLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SLLAppDelegate.m; sourceTree = "<group>"; };
+		D0E2E5251B8EC23F001D82FA /* SLLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SLLViewController.h; sourceTree = "<group>"; };
+		D0E2E5261B8EC23F001D82FA /* SLLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SLLViewController.m; sourceTree = "<group>"; };
 		D0E2E5291B8EC23F001D82FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0E2E52B1B8EC23F001D82FA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D0E2E52E1B8EC23F001D82FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -85,10 +85,10 @@
 			isa = PBXGroup;
 			children = (
 				D0E2E5441B8EC258001D82FA /* SLLColorPicker */,
-				D0E2E5221B8EC23F001D82FA /* AppDelegate.h */,
-				D0E2E5231B8EC23F001D82FA /* AppDelegate.m */,
-				D0E2E5251B8EC23F001D82FA /* ViewController.h */,
-				D0E2E5261B8EC23F001D82FA /* ViewController.m */,
+				D0E2E5221B8EC23F001D82FA /* SLLAppDelegate.h */,
+				D0E2E5231B8EC23F001D82FA /* SLLAppDelegate.m */,
+				D0E2E5251B8EC23F001D82FA /* SLLViewController.h */,
+				D0E2E5261B8EC23F001D82FA /* SLLViewController.m */,
 				D0E2E5281B8EC23F001D82FA /* Main.storyboard */,
 				D0E2E52B1B8EC23F001D82FA /* Images.xcassets */,
 				D0E2E52D1B8EC23F001D82FA /* LaunchScreen.xib */,
@@ -234,9 +234,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0E2E5271B8EC23F001D82FA /* ViewController.m in Sources */,
+				D0E2E5271B8EC23F001D82FA /* SLLViewController.m in Sources */,
 				D0E2E5471B8EC258001D82FA /* SLLColorPicker.m in Sources */,
-				D0E2E5241B8EC23F001D82FA /* AppDelegate.m in Sources */,
+				D0E2E5241B8EC23F001D82FA /* SLLAppDelegate.m in Sources */,
 				D0E2E5211B8EC23F001D82FA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
