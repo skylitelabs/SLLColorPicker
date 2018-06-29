@@ -1,4 +1,4 @@
-ios-color-wheel
+SLLColorPicker
 ===============
 
 ### About ###
@@ -13,7 +13,7 @@ This project contains a color wheel that computes color values mathematically, a
 Color wheels visualize and define colors from hue, saturation, and brightness components (HSB color space). On the wheel, two of these components can be mapped to two-dimensional polar coordinates. Hue is defined by the angle on the wheel. Saturation is defined by the distance from the center. Brightness, the third component cannot also be mapped to the two dimensional surface so it must be controlled by a separate control such as a slider.
 
 ### Includes ###
-  - Standalone ISColorWheel class (UIView subclass)
+  - Standalone SLLColorPicker class (UIView subclass)
   - Example project
 
 
