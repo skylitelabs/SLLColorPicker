@@ -8,8 +8,9 @@
 
 #import "SLLColorPicker.h"
 
-static inline CGFloat SLLColorPicker_PointDistance(CGPoint p1,
-                                                   CGPoint p2) {
+#pragma mark - Supporting Functions
+static inline CGFloat SLLColorPickerPointDistance(CGPoint p1,
+                                                CGPoint p2) {
     return sqrtf((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
 }
 
@@ -66,6 +67,8 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
                                       blue * 255.f);
 }
 
+#pragma mark - Dropper
+
 @interface SLLDropperView : UIView
 
 @property (nonatomic, readwrite, null_unspecified, strong) UIColor* fillColor;
@@ -74,7 +77,7 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
 
 @implementation SLLDropperView
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
         self.fillColor = [UIColor clearColor];
@@ -101,6 +104,8 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
 
 @end
 
+#pragma mark - Color Picker
+
 @interface SLLColorPicker ()
 
 @property (nonatomic, readwrite, assign) CGImageRef radialImage;
@@ -117,17 +122,17 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
 
 @implementation SLLColorPicker
 
-- (void)doInit
-{
-    _radialImage = nil;
-    _imageData = nil;
+- (void)commonInit {
+    self.radialImage = nil;
+    self.imageData = nil;
     
-    _imageDataLength = 0;
+    self.imageDataLength = 0;
     
     _brightness = 1.0;
-    _dropperSize = CGSizeMake(28, 28);
+    self.dropperSize = CGSizeMake(28, 28);
     
-    _touchPoint = CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0);
+    _touchPoint = CGPointMake(self.bounds.size.width / 2.0,
+                              self.bounds.size.height / 2.0);
     
     
     self.borderColor = [UIColor blackColor];
@@ -139,65 +144,58 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     _continuous = false;
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
-    if ((self = [super initWithFrame:frame]))
-    {
-        [self doInit];
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self commonInit];
     }
     return self;
 }
 
-- (void) awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
-    [self doInit];
+    [self commonInit];
 }
 
-- (void)dealloc
-{
-    if (_radialImage)
-    {
-        CGImageRelease(_radialImage);
-        _radialImage = nil;
-    }
+- (void)dealloc {
+    [self clearRadialImage];
     
-    if (_imageData)
-    {
-        free(_imageData);
-    }
+    [self clearImageData];
     
     self.dropperView = nil;
 }
 
 
-- (SLLColorPickerPixelRGB)colorAtPoint:(CGPoint)point
-{
-    CGPoint center = CGPointMake(_radius, _radius);
+- (SLLColorPickerPixelRGB)colorAtPoint:(CGPoint)point {
+    CGPoint center = CGPointMake(self.radius,
+                                 self.radius);
     
-    CGFloat angle = atan2(point.x - center.x, point.y - center.y) + M_PI;
-    CGFloat dist = SLLColorPicker_PointDistance(point, CGPointMake(center.x, center.y));
+    CGFloat angle = atan2(point.x - center.x,
+                          point.y - center.y) + M_PI;
+    CGFloat dist = SLLColorPickerPointDistance(point,
+                                               CGPointMake(center.x,
+                                                           center.y));
     
-    CGFloat hue = angle / (M_PI * 2.0f);
+    CGFloat hue = angle / (M_PI * 2.f);
     
-    hue = MIN(hue, 1.0f - .0000001f);
-    hue = MAX(hue, 0.0f);
+    hue = MIN(hue, 1.f - .0000001f);
+    hue = MAX(hue, 0.f);
     
     CGFloat sat = dist / (_radius);
     
-    sat = MIN(sat, 1.0f);
-    sat = MAX(sat, 0.0f);
+    sat = MIN(sat, 1.f);
+    sat = MAX(sat, 0.f);
     
-    return SLLColorPickerHSBToRGB(hue, sat, _brightness);
+    return SLLColorPickerHSBToRGB(hue, sat, self.brightness);
 }
 
-- (CGPoint)viewToImageSpace:(CGPoint)point
-{
+- (CGPoint)viewToImageSpace:(CGPoint)point {
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
     point.y = height - point.y;
     
-    CGPoint min = CGPointMake(width / 2.0 - _radius, height / 2.0 - _radius);
+    CGPoint min = CGPointMake((width / 2.f) - self.radius,
+                              (height / 2.f) - self.radius);
     
     point.x = point.x - min.x;
     point.y = point.y - min.y;
@@ -205,69 +203,61 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     return point;
 }
 
-- (void)updateDropper
-{
-    if (!_dropperView)
-    {
+- (void)updateDropper {
+    if (!self.dropperView) {
         return;
     }
     
-    _dropperView.bounds = CGRectMake(0, 0, _dropperSize.width, _dropperSize.height);
-    _dropperView.center = _touchPoint;
+    self.dropperView.bounds = CGRectMake(0,
+                                         0,
+                                         self.dropperSize.width,
+                                         self.dropperSize.height);
+    self.dropperView.center = self.touchPoint;
 }
 
-- (void)updateImage
-{
-    if (self.bounds.size.width == 0 || self.bounds.size.height == 0)
-    {
+- (void)updateImage {
+    if (self.bounds.size.width == 0 || self.bounds.size.height == 0) {
         return;
     }
     
-    if (_radialImage)
-    {
-        CGImageRelease(_radialImage);
-        _radialImage = nil;
-    }
+    [self clearRadialImage];
     
-    int width = _radius * 2.0;
+    int width = self.radius * 2.f;
     int height = width;
     
     int dataLength = sizeof(SLLColorPickerPixelRGB) * width * height;
     
-    if (dataLength != _imageDataLength)
-    {
-        if (_imageData)
-        {
-            free(_imageData);
-        }
-        _imageData = malloc(dataLength);
-        _imageDataLength = dataLength;
+    if (dataLength != self.imageDataLength) {
+        [self clearImageData];
+        self.imageData = malloc(dataLength);
+        self.imageDataLength = dataLength;
     }
     
-    for (int y = 0; y < height; ++y)
-    {
-        for (int x = 0; x < width; ++x)
-        {
-            _imageData[x + y * width] = [self colorAtPoint:CGPointMake(x, y)];
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            self.imageData[x + y * width] = [self colorAtPoint:CGPointMake(x, y)];
         }
     }
     
     CGBitmapInfo bitInfo = kCGBitmapByteOrderDefault;
     
-	CGDataProviderRef ref = CGDataProviderCreateWithData(NULL, _imageData, dataLength, NULL);
+	CGDataProviderRef ref = CGDataProviderCreateWithData(NULL,
+                                                         self.imageData,
+                                                         dataLength,
+                                                         NULL);
 	CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     
-	_radialImage = CGImageCreate(width,
-                                 height,
-                                 8,
-                                 24,
-                                 width * 3,
-                                 colorspace,
-                                 bitInfo,
-                                 ref,
-                                 NULL,
-                                 true,
-                                 kCGRenderingIntentDefault);
+	self.radialImage = CGImageCreate(width,
+                                     height,
+                                     8,
+                                     24,
+                                     width * 3,
+                                     colorspace,
+                                     bitInfo,
+                                     ref,
+                                     NULL,
+                                     true,
+                                     kCGRenderingIntentDefault);
     
     CGColorSpaceRelease(colorspace);
     CGDataProviderRelease(ref);
@@ -275,88 +265,84 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     [self setNeedsDisplay];
 }
 
-- (UIColor*)currentColor
-{
-    SLLColorPickerPixelRGB pixel = [self colorAtPoint:[self viewToImageSpace:_touchPoint]];
+- (UIColor*)currentColor {
+    SLLColorPickerPixelRGB pixel = [self colorAtPoint:[self viewToImageSpace:self.touchPoint]];
     return [UIColor colorWithRed:pixel.red / 255.f
                            green:pixel.green / 255.f
                             blue:pixel.blue / 255.f
                            alpha:1.0];
 }
 
-- (void)setCurrentColor:(UIColor*)color
-{
-    CGFloat h = 0.0;
-    CGFloat s = 0.0;
-    CGFloat b = 1.0;
-    CGFloat a = 1.0;
+- (void)setCurrentColor:(UIColor*)color {
+    CGFloat hue = 0.f;
+    CGFloat saturation = 0.f;
+    CGFloat brightness = 1.f;
+    CGFloat alpha = 1.f;
     
-    [color getHue:&h saturation:&s brightness:&b alpha:&a];
+    [color getHue:&hue
+       saturation:&saturation
+       brightness:&brightness
+            alpha:&alpha];
     
-    self.brightness = b;
+    self.brightness = brightness;
     
-    CGPoint center = CGPointMake(_radius, _radius);
+    CGPoint center = CGPointMake(self.radius,
+                                 self.radius);
     
-    CGFloat angle = (h * (M_PI * 2.0)) + M_PI / 2;
-    CGFloat dist = s * _radius;
+    CGFloat angle = (hue * (M_PI * 2.f)) + M_PI / 2;
+    CGFloat dist = saturation * self.radius;
     
     CGPoint point;
     point.x = center.x + (cosf(angle) * dist);
     point.y = center.y + (sinf(angle) * dist);
     
-    [self setTouchPoint: point];
+    [self setTouchPoint:point];
     [self updateImage];
 }
 
-- (void)setBrightness:(CGFloat)brightness
-{
+- (void)setBrightness:(CGFloat)brightness {
     _brightness = brightness;
     
     [self updateImage];
-    
-    if ([_dropperView respondsToSelector:@selector(setFillColor:)])
-    {
-        [_dropperView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
-        [_dropperView setNeedsDisplay];
-    }
-    
-    [_delegate colorPickerDidChangeColor:self];
+    [self updateDropperView];
+    [self notifyDelegateOfChange];
 }
 
-- (void)setDropperView:(UIView *)dropperView
-{
-    if (_dropperView)
-    {
-        [_dropperView removeFromSuperview];
+- (void)setDropperView:(UIView *)dropperView {
+    if (self.dropperView) {
+        [self.dropperView removeFromSuperview];
     }
     
     _dropperView = dropperView;
     
-    if (_dropperView)
-    {
-        [self addSubview:_dropperView];
+    if (self.dropperView) {
+        [self addSubview:self.dropperView];
     }
     
     [self updateDropper];
 }
 
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState (ctx);
     
     NSInteger width = self.bounds.size.width;
     NSInteger height = self.bounds.size.height;
-    CGPoint center = CGPointMake(width / 2.0, height / 2.0);
+    CGPoint center = CGPointMake(width / 2.f,
+                                 height / 2.f);
 
     
-    CGRect wheelFrame = CGRectMake(center.x - _radius, center.y - _radius, _radius * 2.0, _radius * 2.0);
-    CGRect borderFrame = CGRectInset(wheelFrame, -_borderWidth / 2.0, -_borderWidth / 2.0);
+    CGRect wheelFrame = CGRectMake(center.x - self.radius,
+                                   center.y - self.radius,
+                                   self.radius * 2.f,
+                                   self.radius * 2.f);
+    CGRect borderFrame = CGRectInset(wheelFrame,
+                                     -self.borderWidth / 2.f,
+                                     -self.borderWidth / 2.f);
 
-    if (_borderWidth > 0.0f)
-    {
-        CGContextSetLineWidth(ctx, _borderWidth);
-        CGContextSetStrokeColorWithColor(ctx, [_borderColor CGColor]);
+    if (self.borderWidth > 0.f) {
+        CGContextSetLineWidth(ctx, self.borderWidth);
+        CGContextSetStrokeColorWithColor(ctx, [self.borderColor CGColor]);
         CGContextAddEllipseInRect(ctx, borderFrame);
         CGContextStrokePath(ctx);
     }
@@ -364,92 +350,107 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     CGContextAddEllipseInRect(ctx, wheelFrame);
     CGContextClip(ctx);
     
-    if (_radialImage)
-    {
-        CGContextDrawImage(ctx, wheelFrame, _radialImage);
+    if (self.radialImage) {
+        CGContextDrawImage(ctx, wheelFrame, self.radialImage);
     }
     
     CGContextRestoreGState (ctx);
-    
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
-    _radius = (MIN(self.bounds.size.width, self.bounds.size.height) / 2.0) - MAX(0.0f, _borderWidth);
+    self.radius = (MIN(self.bounds.size.width, self.bounds.size.height) / 2.f) - MAX(0.f, self.borderWidth);
     
     [self updateImage];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet *)touches
+           withEvent:(UIEvent *)event {
     [self willChangeValueForKey:@"currentColor"];
     
-    [self setTouchPoint:[[touches anyObject] locationInView:self]];
+    self.touchPoint = [[touches anyObject] locationInView:self];
     
-    if ([_dropperView respondsToSelector:@selector(setFillColor:)])
-    {
-        [_dropperView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
-        [_dropperView setNeedsDisplay];
-    }
+    [self updateDropperView];
     
     [self didChangeValueForKey:@"currentColor"];
     
-    [_delegate colorPickerDidChangeColor:self];
+    [self notifyDelegateOfChange];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesMoved:(NSSet *)touches
+           withEvent:(UIEvent *)event {
     [self willChangeValueForKey:@"currentColor"];
     
-    [self setTouchPoint:[[touches anyObject] locationInView:self]];
+    self.touchPoint = [[touches anyObject] locationInView:self];
     
-    if ([_dropperView respondsToSelector:@selector(setFillColor:)])
-    {
-        [_dropperView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
-        [_dropperView setNeedsDisplay];
-    }
+    [self updateDropperView];
     
     [self didChangeValueForKey:@"currentColor"];
     
-    if (_continuous)
-    {
-        [_delegate colorPickerDidChangeColor:self];
+    if (self.continuous) {
+        [self notifyDelegateOfChange];
     }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [_delegate colorPickerDidChangeColor:self];
+- (void)touchesEnded:(NSSet *)touches
+           withEvent:(UIEvent *)event {
+    [self notifyDelegateOfChange];
 }
 
 
-- (void)setTouchPoint:(CGPoint)point
-{
+- (void)setTouchPoint:(CGPoint)point {
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGPoint center = CGPointMake(width / 2.0, height / 2.0);
+    CGPoint center = CGPointMake(width / 2.f,
+                                 height / 2.f);
     
     // Check if the touch is outside the wheel
-    if (SLLColorPicker_PointDistance(center, point) < _radius)
-    {
+    if (SLLColorPickerPointDistance(center, point) < self.radius) {
         _touchPoint = point;
-    }
-    else
-    {
+    } else {
         // If so we need to create a drection vector and calculate the constrained point
-        CGPoint vec = CGPointMake(point.x - center.x, point.y - center.y);
+        CGPoint vec = CGPointMake(point.x - center.x,
+                                  point.y - center.y);
         
         CGFloat extents = sqrtf((vec.x * vec.x) + (vec.y * vec.y));
         
         vec.x /= extents;
         vec.y /= extents;
         
-        _touchPoint = CGPointMake(center.x + vec.x * _radius, center.y + vec.y * _radius);
+        _touchPoint = CGPointMake(center.x + vec.x * self.radius,
+                                  center.y + vec.y * self.radius);
     }
     
     [self updateDropper];
+}
+
+#pragma mark - Helper Methods
+
+- (void)notifyDelegateOfChange {
+    if ([self.delegate respondsToSelector:@selector(colorPickerDidChangeColor:)]) {
+        [self.delegate colorPickerDidChangeColor:self];
+    }
+}
+
+- (void)updateDropperView {
+    if ([self.dropperView respondsToSelector:@selector(setFillColor:)]) {
+        [self.dropperView performSelector:@selector(setFillColor:) withObject:self.currentColor afterDelay:0.0f];
+        [self.dropperView setNeedsDisplay];
+    }
+}
+
+- (void)clearImageData {
+    if (self.imageData) {
+        free(self.imageData);
+    }
+}
+
+- (void)clearRadialImage {
+    if (self.radialImage) {
+        CGImageRelease(self.radialImage);
+        self.radialImage = nil;
+    }
 }
 
 @end
