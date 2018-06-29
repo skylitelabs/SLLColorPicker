@@ -6,13 +6,13 @@
  Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  */
 
-#import "AppDelegate.h"
+#import "SLLAppDelegate.h"
 
-@interface AppDelegate ()
+@interface SLLAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation SLLAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
