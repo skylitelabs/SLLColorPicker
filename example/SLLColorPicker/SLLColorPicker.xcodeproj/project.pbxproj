@@ -41,7 +41,7 @@
 		D0E2E5341B8EC23F001D82FA /* SLLColorPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SLLColorPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E2E5391B8EC23F001D82FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0E2E53A1B8EC23F001D82FA /* ColorWheelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorWheelTests.m; sourceTree = "<group>"; };
-		D0E2E5451B8EC258001D82FA /* SLLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SLLColorPicker.h; path = ../SLLColorPicker/SLLColorPicker.h; sourceTree = "<group>"; };
+		D0E2E5451B8EC258001D82FA /* SLLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLColorPicker.h; sourceTree = "<group>"; };
 		D0E2E5461B8EC258001D82FA /* SLLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SLLColorPicker.m; path = ../SLLColorPicker/SLLColorPicker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,7 +130,7 @@
 				D0E2E5461B8EC258001D82FA /* SLLColorPicker.m */,
 			);
 			name = SLLColorPicker;
-			path = ../../../source;
+			path = ../../../SLLColorPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
