@@ -132,6 +132,7 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     _brightness = 1.0;
     self.dropperSize = CGSizeMake(28, 28);
     
+    _radius = (MIN(self.bounds.size.width, self.bounds.size.height) / 2.f) - MAX(0.f, self.borderWidth);
     _touchPoint = CGPointMake(self.bounds.size.width / 2.0,
                               self.bounds.size.height / 2.0);
     
@@ -321,7 +322,6 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     CGPoint point;
     point.x = center.x + (cosf(angle) * dist);
     point.y = center.y + (sinf(angle) * dist);
-    
     [self setTouchPoint:point];
     [self updateImage];
 }

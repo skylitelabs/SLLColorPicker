@@ -32,42 +32,49 @@
                                                                         size.height * .1,
                                                                         pickerSize.width,
                                                                         pickerSize.height)];
-    _colorPicker.delegate = self;
-    _colorPicker.continuous = true;
-    [self.view addSubview:_colorPicker];
+    self.colorPicker.delegate = self;
+    self.colorPicker.continuous = true;
+    [self.view addSubview:self.colorPicker];
     
-    _brightnessSlider = [[UISlider alloc] initWithFrame:CGRectMake(size.width * .4,
-                                                                   size.height * .8,
-                                                                   size.width * .5,
-                                                                   size.height * .1)];
-    _brightnessSlider.minimumValue = 0.0;
-    _brightnessSlider.maximumValue = 1.0;
-    _brightnessSlider.value = 1.0;
-    _brightnessSlider.continuous = true;
-    [_brightnessSlider addTarget:self action:@selector(changeBrightness:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:_brightnessSlider];
+    self.brightnessSlider = [[UISlider alloc] initWithFrame:CGRectMake(size.width * .4,
+                                                                       size.height * .8,
+                                                                       size.width * .5,
+                                                                       size.height * .1)];
+    self.brightnessSlider.minimumValue = 0.0;
+    self.brightnessSlider.maximumValue = 1.0;
+    self.brightnessSlider.value = 1.0;
+    self.brightnessSlider.continuous = true;
+    [self.brightnessSlider addTarget:self
+                              action:@selector(changeBrightness:)
+                    forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:self.brightnessSlider];
     
-    _wellView = [[UIView alloc] initWithFrame:CGRectMake(size.width * .1,
-                                                         size.height * .8,
-                                                         size.width * .2,
-                                                         size.height * .1)];
+    self.wellView = [[UIView alloc] initWithFrame:CGRectMake(size.width * .1,
+                                                             size.height * .8,
+                                                             size.width * .2,
+                                                             size.height * .1)];
     
-    _wellView.layer.borderColor = [UIColor blackColor].CGColor;
-    _wellView.layer.borderWidth = 2.0;
-    [self.view addSubview:_wellView];
+    self.wellView.layer.borderColor = [UIColor blackColor].CGColor;
+    self.wellView.layer.borderWidth = 2.0;
+    [self.view addSubview:self.wellView];
+    self.colorPicker.currentColor = [UIColor colorWithRed:249.f / 255
+                                                    green:150.f / 255
+                                                     blue:45.f / 255
+                                                    alpha:1.f];
+    self.wellView.backgroundColor = self.colorPicker.currentColor;
 }
 
 
 
 - (void)changeBrightness:(UISlider*)sender
 {
-    [_colorPicker setBrightness:_brightnessSlider.value];
-    [_wellView setBackgroundColor:_colorPicker.currentColor];
+    self.colorPicker.brightness = self.brightnessSlider.value;
+    self.wellView.backgroundColor = self.colorPicker.currentColor;
 }
 
 - (void)colorPickerDidChangeColor:(SLLColorPicker *)colorPicker
 {
-    [_wellView setBackgroundColor:_colorPicker.currentColor];
+    self.wellView.backgroundColor =self.colorPicker.currentColor;
 }
 
     // Do any additional setup after loading the view, typically from a nib.
