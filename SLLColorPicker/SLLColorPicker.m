@@ -10,7 +10,7 @@
 
 #pragma mark - Supporting Functions
 static inline CGFloat SLLColorPickerPointDistance(CGPoint p1,
-                                                CGPoint p2) {
+                                                  CGPoint p2) {
     return sqrtf((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
 }
 
@@ -117,6 +117,7 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
 - (SLLColorPickerPixelRGB)colorAtPoint:(CGPoint)point;
 - (CGPoint)viewToImageSpace:(CGPoint)point;
 - (void)updateDropper;
+- (CGPoint)pointForColor:(UIColor *)color;
 
 @end
 
@@ -186,6 +187,31 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     sat = MAX(sat, 0.f);
     
     return SLLColorPickerHSBToRGB(hue, sat, self.brightness);
+}
+
+- (CGPoint)pointForColor:(UIColor *)color {
+    CGFloat hue = 0.f;
+    CGFloat saturation = 0.f;
+    CGFloat brightness = 1.f;
+    CGFloat alpha = 1.f;
+    
+    [color getHue:&hue
+       saturation:&saturation
+       brightness:&brightness
+            alpha:&alpha];
+    
+    self.brightness = brightness;
+    
+    CGPoint center = CGPointMake(self.radius,
+                                 self.radius);
+    
+    CGFloat angle = (hue * (M_PI * 2.f)) + M_PI / 2;
+    CGFloat dist = saturation * self.radius;
+    
+    CGPoint point;
+    point.x = center.x + (cosf(angle) * dist);
+    point.y = center.y + (sinf(angle) * dist);
+    return point;
 }
 
 - (CGPoint)viewToImageSpace:(CGPoint)point {
@@ -358,10 +384,15 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
 }
 
 - (void)layoutSubviews {
+    // catch the current color before we layout the subviews to prevent the math being incorrect
+    UIColor *currentColor = self.currentColor;
     [super layoutSubviews];
+    // redraw the circular color picker portion
     self.radius = (MIN(self.bounds.size.width, self.bounds.size.height) / 2.f) - MAX(0.f, self.borderWidth);
-    
     [self updateImage];
+    // reset the touch point
+    CGPoint colorPoint = [self pointForColor:currentColor];
+    self.touchPoint = colorPoint;
 }
 
 - (void)touchesBegan:(NSSet *)touches
