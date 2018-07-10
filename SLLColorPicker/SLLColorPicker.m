@@ -349,6 +349,9 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
 }
 
 - (void)drawRect:(CGRect)rect {
+    UIColor *currentColor = self.currentColor;
+    self.radius = (MIN(self.bounds.size.width, self.bounds.size.height) / 2.f) - MAX(0.f, self.borderWidth);
+    [self updateImage];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState (ctx);
     
@@ -381,6 +384,8 @@ static inline SLLColorPickerPixelRGB SLLColorPickerHSBToRGB(CGFloat hue,
     }
     
     CGContextRestoreGState (ctx);
+    CGPoint colorPoint = [self pointForColor:currentColor];
+    self.touchPoint = colorPoint;
 }
 
 - (void)layoutSubviews {
